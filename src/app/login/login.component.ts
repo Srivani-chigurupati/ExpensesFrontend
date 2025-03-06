@@ -39,8 +39,7 @@ export class LoginComponent {
       alert('An unexpected error occurred');
     }
   });
-      //alert(error.error.Message);
-      //console.log(error.error.Message);
+
 
  }
 
