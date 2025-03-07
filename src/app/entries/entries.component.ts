@@ -30,6 +30,10 @@ export class EntriesComponent {
 
   constructor(private service: EntryService,private dialog:MatDialog){}
   ngOnInit(){
+    this.loadEntries();
+  }
+
+  loadEntries(){
     this.service.getAllentries().subscribe((data) => {
       console.log(data);
       this.dataSource = new MatTableDataSource(data);
@@ -43,14 +47,20 @@ export class EntriesComponent {
 
   }
 
-  updateEntry(entry:EntryElement){
-    console.log('Update Entry - ',entry);
-    this.dialog.open(UpdateEntryComponent,{
-      data:{
-        Id:entry.id,
-        Description:entry.description,
-        IsExpense:entry.isExpense,
-        Value:entry.value
+  updateEntry(entry: EntryElement) {
+    console.log('Update Entry - ', entry);
+    const dialogRef = this.dialog.open(UpdateEntryComponent, {
+      data: {
+        Id: entry.id,
+        Description: entry.description,
+        IsExpense: entry.isExpense,
+        Value: entry.value
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadEntries(); // Reload entries after update
       }
     });
   }

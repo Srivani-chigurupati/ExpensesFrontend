@@ -47,8 +47,8 @@ export class UpdateEntryComponent {
 
     }
     close(){
-        this.dialogRef.close();
-        this.router.navigate(['/']);
+      //this.router.navigate(['/']);
+      this.dialogRef.close();
     }
 
     save(){
@@ -57,8 +57,9 @@ export class UpdateEntryComponent {
             console.log('response - ',response);
             
         });
-        this.dialogRef.close();
-        this.router.navigate(['/']);
+        this.dialogRef.close(this.form.value);
+        this.router.navigate(['/entries']);
+       
     }
 
    

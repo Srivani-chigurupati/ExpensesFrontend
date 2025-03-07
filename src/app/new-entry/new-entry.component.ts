@@ -5,9 +5,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
+import { MatCardActions, MatCardModule } from '@angular/material/card';
 import { Type } from '../Interfaces/Type';
 import { EntryService } from '../Services/entry.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-new-entry',
@@ -19,7 +20,7 @@ import { EntryService } from '../Services/entry.service';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatCardModule
+    MatCardModule,MatCardActions
   ],
   providers: [EntryService],
   templateUrl: './new-entry.component.html',
@@ -29,7 +30,7 @@ import { EntryService } from '../Services/entry.service';
 
 export class NewEntryComponent {
 
-  constructor(private entryService: EntryService) { }
+  constructor(private entryService: EntryService,private router:Router) { }
   entryForm = new FormGroup({
     description: new FormControl('',Validators.required),
     isExpense: new FormControl('',Validators.required),
@@ -46,6 +47,13 @@ export class NewEntryComponent {
     console.log(this.entryForm.value);
     this.entryService.createEntry(this.entryForm.value).subscribe((response) => {
       console.log('response - ',response);
+      //this.router.navigate(['/']);
+      this.entryForm.reset();
     });
   }
+
+  onCancel() {
+    this.router.navigate(['/']);
+  }
+
 }
