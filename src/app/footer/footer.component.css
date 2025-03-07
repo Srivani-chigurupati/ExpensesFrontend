@@ -3,3 +3,20 @@
     margin-left: auto;
 
 }
+
+.footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    z-index: 1000;
+    font-size: small;
+    height: 50px;
+    margin-top: 60px;
+    display: flex;
+}
+  
+  .fill-remaining-space {
+    flex: 1 1 auto;
+  }

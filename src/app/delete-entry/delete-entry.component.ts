@@ -40,6 +40,7 @@ export class DeleteEntryComponent {
   confirm(){
     this.service.deleteEntry(this.id).subscribe((data) => {
       console.log('Entry Deleted - ',data);
+      this.router.navigate(['/']);
     });
   }
 

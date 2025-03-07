@@ -1,5 +1,5 @@
 .new-entry-form{
-    margin: 5% 20% 20% 5%;
+    margin: 5% 20% 5% 5%;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -16,3 +16,17 @@
 .new-form-btn{
     position: relative;
 }
+
+.action-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+  }
+  
+  .cancel-btn {
+    margin-right: auto;
+  }
+  
+  .create-another-btn {
+    margin-left: auto;
+  }

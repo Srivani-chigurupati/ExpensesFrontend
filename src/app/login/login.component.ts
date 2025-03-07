@@ -30,7 +30,7 @@ export class LoginComponent {
       console.log(data);
       localStorage.setItem('token',data.token);
       localStorage.setItem('username',data.username);
-      this.router.navigate(['/entries']);
+      this.router.navigate(['/']);
    }, (error: any) => {
     // Handle error response
     if (error.error && error.error.error) {

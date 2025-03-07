@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AuthService } from '../Services/auth.service';
 import { CommonModule } from '@angular/common';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -24,7 +25,7 @@ import { CommonModule } from '@angular/common';
 export class RegisterComponent {
   registerForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(private fb: FormBuilder, private authService: AuthService,private router: Router) {
     this.registerForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
@@ -36,8 +37,10 @@ export class RegisterComponent {
     delete this.registerForm.value.confirmPassword;
     this.authService.register(this.registerForm.value).subscribe((response:any) => {
       console.log('response - ', response);
-      localStorage.setItem('token', response['token']);
-      localStorage.setItem('username', response['username']);
+      // localStorage.setItem('token', response['token']);
+      // localStorage.setItem('username', response['username']);
+      this.router.navigate(['/login']);
+
     });
   }
 }
