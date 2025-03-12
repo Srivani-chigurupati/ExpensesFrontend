@@ -11,6 +11,8 @@ import { Type } from '../Interfaces/Type';
 import { CommonModule } from '@angular/common';
 import { EntryService } from '../Services/entry.service';
 import { Router } from '@angular/router';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-update-entry',
@@ -18,7 +20,7 @@ import { Router } from '@angular/router';
       MatFormFieldModule,
       MatInputModule,
       MatSelectModule,
-      MatCardModule,ReactiveFormsModule,CommonModule
+      MatCardModule,ReactiveFormsModule,CommonModule,MatDatepickerModule,MatNativeDateModule
     ],
   templateUrl: './update-entry.component.html',
   styleUrl: './update-entry.component.css'
@@ -36,31 +38,33 @@ export class UpdateEntryComponent {
     id:number=0;
     constructor(private fb:FormBuilder,private entryService:EntryService,private router:Router,
         private dialogRef:MatDialogRef<UpdateEntryComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: { Description: string, IsExpense: boolean, Value: number, Id: number }){
+        @Inject(MAT_DIALOG_DATA) public data: { Description: string, IsExpense: boolean, Value: number, Id: number, Date: Date }) {
         this.id = data.Id;
         this.form = this.fb.group({
           description: [data.Description, Validators.required],
           isExpense: [data.IsExpense, Validators.required],
-          value: [data.Value, [Validators.required, Validators.pattern('\\d+\\.?\\d*')]]
+          value: [data.Value, [Validators.required, Validators.pattern('\\d+\\.?\\d*')]],
+          date: [data.Date, Validators.required]
         });
       
 
     }
     close(){
-      //this.router.navigate(['/']);
-      this.dialogRef.close();
+        this.dialogRef.close();
+        this.router.navigate(['/']);
     }
 
-    save(){
+    save() {
       this.form.value.id = this.id;
-        this.entryService.UpdateEntry(this.id,this.form.value).subscribe((response)=>{
-            console.log('response - ',response);
-            
-        });
-        this.dialogRef.close(this.form.value);
-        this.router.navigate(['/entries']);
-       
+      this.entryService.UpdateEntry(this.id, this.form.value).subscribe((updatedEntry) => {
+        console.log('Updated Entry:', updatedEntry);
+        this.dialogRef.close(updatedEntry); // Return updated entry to parent component
+        this.router.navigate(['/']);
+      });
     }
+
+    
+    
 
    
 }

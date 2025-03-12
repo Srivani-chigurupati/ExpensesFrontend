@@ -3,6 +3,7 @@ export interface EntryElement{
     description:string;
     isExpense:boolean;
     value:number;
+    date:Date;
     
     //Date:Date;
 }

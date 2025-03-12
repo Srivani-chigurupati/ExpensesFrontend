@@ -5,10 +5,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
-import { MatCardActions, MatCardModule } from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 import { Type } from '../Interfaces/Type';
 import { EntryService } from '../Services/entry.service';
-import {Router} from '@angular/router';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-new-entry',
@@ -20,7 +21,7 @@ import {Router} from '@angular/router';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatCardModule,MatCardActions
+    MatCardModule,MatDatepickerModule,MatNativeDateModule
   ],
   providers: [EntryService],
   templateUrl: './new-entry.component.html',
@@ -30,11 +31,12 @@ import {Router} from '@angular/router';
 
 export class NewEntryComponent {
 
-  constructor(private entryService: EntryService,private router:Router) { }
+  constructor(private entryService: EntryService) { }
   entryForm = new FormGroup({
     description: new FormControl('',Validators.required),
     isExpense: new FormControl('',Validators.required),
-    value: new FormControl('',[Validators.required,Validators.pattern('\\d+\\.?\\d*')])
+    value: new FormControl('',[Validators.required,Validators.pattern('\\d+\\.?\\d*')]),
+    date: new FormControl('',Validators.required)
   });
 
   types: Type[] = [
@@ -47,13 +49,6 @@ export class NewEntryComponent {
     console.log(this.entryForm.value);
     this.entryService.createEntry(this.entryForm.value).subscribe((response) => {
       console.log('response - ',response);
-      //this.router.navigate(['/']);
-      this.entryForm.reset();
     });
   }
-
-  onCancel() {
-    this.router.navigate(['/']);
-  }
-
 }
