@@ -8,6 +8,8 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { Type } from '../Interfaces/Type';
 import { EntryService } from '../Services/entry.service';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-new-entry',
@@ -19,7 +21,7 @@ import { EntryService } from '../Services/entry.service';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatCardModule
+    MatCardModule,MatDatepickerModule,MatNativeDateModule
   ],
   providers: [EntryService],
   templateUrl: './new-entry.component.html',
@@ -33,7 +35,8 @@ export class NewEntryComponent {
   entryForm = new FormGroup({
     description: new FormControl('',Validators.required),
     isExpense: new FormControl('',Validators.required),
-    value: new FormControl('',[Validators.required,Validators.pattern('\\d+\\.?\\d*')])
+    value: new FormControl('',[Validators.required,Validators.pattern('\\d+\\.?\\d*')]),
+    date: new FormControl('',Validators.required)
   });
 
   types: Type[] = [
